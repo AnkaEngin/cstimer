@@ -1481,3 +1481,144 @@ html.cspt:not(.m) .mywindow, html.cspt:not(.m) #leftbar {
 html.cspt:not(.m) .mywindow:hover, html.cspt:not(.m) #leftbar:hover {
     z-index: 1 !important;
 }
+
+/* CubeDesk-style Dark Theme */
+body {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+#timer, #container {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+#lcd {
+    color: #ffffff !important;
+    font-size: 2.5em !important;
+}
+
+#avgstr {
+    color: #00ff00 !important;
+}
+
+#leftbar {
+    background-color: #2a2a2a !important;
+    border-color: #3a3a3a !important;
+}
+
+#leftbar > div {
+    background-color: #2a2a2a !important;
+    color: #ffffff !important;
+}
+
+#leftbar > div:hover {
+    background-color: #3a3a3a !important;
+}
+
+#scrambleDiv {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+#scrambleTxt {
+    color: #ffffff !important;
+    background-color: #2a2a2a !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+}
+
+#stats {
+    background-color: #2a2a2a !important;
+    color: #ffffff !important;
+    border: 1px solid #3a3a3a !important;
+    border-radius: 5px !important;
+    padding: 15px !important;
+}
+
+#stats table {
+    color: #ffffff !important;
+}
+
+#stats .table td, #stats .table th {
+    border-color: #3a3a3a !important;
+    color: #ffffff !important;
+}
+
+/* Allow PB (Personal Best) red color to show through */
+#stats .table td.pb,
+#stats .table td.times.pb,
+.times.pb {
+    color: inherit !important;
+    font-weight: bold !important;
+}
+
+.mywindow {
+    background-color: #2a2a2a !important;
+    color: #ffffff !important;
+    border: 1px solid #3a3a3a !important;
+}
+
+.mywindow * {
+    color: #ffffff !important;
+}
+
+/* Allow PB colors to show through in windows */
+.mywindow .times.pb,
+.mywindow td.pb {
+    color: inherit !important;
+}
+
+/* Stats panel improvements */
+#stats .table {
+    background-color: #2a2a2a !important;
+}
+
+#stats .table tr:hover {
+    background-color: #3a3a3a !important;
+}
+
+/* Solve list improvements */
+.myscroll {
+    background-color: #2a2a2a !important;
+    border: 1px solid #3a3a3a !important;
+    border-radius: 5px !important;
+    padding: 10px !important;
+}
+
+/* Stats grid improvements */
+.statc {
+    background-color: #2a2a2a !important;
+    border: 1px solid #3a3a3a !important;
+    border-radius: 5px !important;
+    padding: 15px !important;
+}
+
+/* Allow best times to use their configured color (red for PBs) */
+#stats .click[data="bs"],
+#stats .click[data^="b"],
+#stats td.pb,
+#stats .times.pb {
+    color: inherit !important;
+}
+
+/* Statistics grid items */
+.statc > div {
+    background-color: #1a1a1a !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    text-align: center !important;
+}
+
+.statc > div > span:first-child {
+    font-size: 0.9em !important;
+    color: #aaaaaa !important;
+    display: block !important;
+    margin-bottom: 5px !important;
+}
+
+.statc > div > span:last-child {
+    font-size: 1.2em !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}

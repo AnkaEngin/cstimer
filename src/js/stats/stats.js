@@ -1693,14 +1693,14 @@ var stats = execMain(function(kpretty, round, kpround) {
 		if (!force && /^\s*([am]o\d+[\s,;]*)+\s*$/.exec(curValue)) {
 			return;
 		}
-		var input = $.prompt('Statistics Details', curValue || 'mo3 ao5 ao12 ao100');
+		var input = $.prompt('Statistics Details', curValue || 'mo3 ao5 ao12 ao100 ao1000');
 		if (/^\s*([am]o\d+[\s,;]*)+\s*$/.exec(input) && avgSizesStd(input)) {
 			kernel.setProp('statalu', input);
 		} else {
 			if (input != null) {
 				$.alert('INVALID VALUES!');
 			}
-			kernel.setProp('statal', 'mo3 ao5 ao12 ao100');
+			kernel.setProp('statal', 'mo3 ao5 ao12 ao100 ao1000');
 			kernel.reprop();
 		}
 	}
@@ -1708,7 +1708,7 @@ var stats = execMain(function(kpretty, round, kpround) {
 	function updateStatalU(statal) {
 		var avgSizesNew = avgSizesStd(statal);
 		if (!avgSizesNew) {
-			kernel.setProp('statal', 'mo3 ao5 ao12 ao100');
+			kernel.setProp('statal', 'mo3 ao5 ao12 ao100 ao1000');
 			kernel.reprop();
 			return;
 		}
@@ -1879,9 +1879,9 @@ var stats = execMain(function(kpretty, round, kpround) {
 		kernel.regProp('stats', 'stat2t', 1, stattl[0].replace('%d', 2), [0, [0, 1], stattl.slice(2)], 1);
 		kernel.regProp('stats', 'stat2l', 2, stattl[1].replace('%d', 2), [12, 3, 1000], 1);
 		kernel.regProp('stats', 'rsfor1s', 0, STATS_RSFORSS, [false]);
-		kernel.regProp('stats', 'statalu', 5, PROPERTY_STATALU, ['mo3 ao5 ao12 ao100'], 1);
-		kernel.regProp('stats', 'statal', 1, PROPERTY_STATAL, ['mo3 ao5 ao12 ao100', ['mo3 ao5 ao12 ao100', 'mo3 ao5 ao12 ao25 ao50 ao100', 'mo3 ao5 ao12 ao25 ao50 ao100 ao200 ao500 ao1000 ao2000 ao5000 ao10000', 'u'],
-			['mo3 ao5 ao12 ao100', 'mo3 ao5 ao12 ao25 ao50 ao100', 'mo3 ao5 ao12 ao25 ao50 ao100 ao200 ao500 ao1000 ao2000 ao5000 ao10000', 'Custom']
+		kernel.regProp('stats', 'statalu', 5, PROPERTY_STATALU, ['mo3 ao5 ao12 ao100 ao1000'], 1);
+		kernel.regProp('stats', 'statal', 1, PROPERTY_STATAL, ['mo3 ao5 ao12 ao100 ao1000', ['mo3 ao5 ao12 ao100', 'mo3 ao5 ao12 ao100 ao1000', 'mo3 ao5 ao12 ao25 ao50 ao100', 'mo3 ao5 ao12 ao25 ao50 ao100 ao200 ao500 ao1000 ao2000 ao5000 ao10000', 'u'],
+			['mo3 ao5 ao12 ao100', 'mo3 ao5 ao12 ao100 ao1000', 'mo3 ao5 ao12 ao25 ao50 ao100', 'mo3 ao5 ao12 ao25 ao50 ao100 ao200 ao500 ao1000 ao2000 ao5000 ao10000', 'Custom']
 		], 1);
 		kernel.regProp('stats', 'delmul', 0, PROPERTY_DELMUL, [true]);
 		kernel.regProp('ui', 'statHide', ~0, 'Hide Session Title', [false]);

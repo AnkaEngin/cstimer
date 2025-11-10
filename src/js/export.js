@@ -339,12 +339,15 @@ var exportFunc = execMain(function() {
 		});
 	}
 
-	function downloadDataGGL() {
+	function downloadDataGGL(silent) {
+		silent = silent || false;
 		var gglToken = getDataId('gglData', 'access_token');
 		if (!gglToken) {
 			return;
 		}
-		inServGGL.html('Check File List...');
+		if (!silent) {
+			inServGGL.html('Check File List...');
+		}
 		$.ajax('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&orderBy=modifiedTime desc&q=name%3D%27cstimer.txt%27&fields=files%28id%2Csize%2CmodifiedTime%29', {
 			'type': 'GET',
 			'beforeSend': function(xhr) {
@@ -353,17 +356,21 @@ var exportFunc = execMain(function() {
 		}).success(function(data, status, xhr) {
 			var files = data['files'];
 			if (files.length == 0) {
-				$.alert('No Data Found');
+				if (!silent) {
+					$.alert('No Data Found');
+				}
 				return updateUserInfoFromGGL();
 			}
 			var idx = 1;
-			if (kernel.getProp('expp')) {
+			if (!silent && kernel.getProp('expp')) {
 				idx = promptWhichFile(files);
 				if (idx <= 0 || idx > files.length) {
 					return updateUserInfoFromGGL();
 				}
 			}
-			inServGGL.html('Import Data...');
+			if (!silent) {
+				inServGGL.html('Import Data...');
+			}
 			var fileId = files[idx - 1]['id'];
 			$.ajax('https://www.googleapis.com/drive/v3/files/' + fileId + '?alt=media', {
 				'type': 'GET',
@@ -374,13 +381,17 @@ var exportFunc = execMain(function() {
 				try {
 					data = JSON.parse(LZString.decompressFromEncodedURIComponent(data));
 				} catch (e) {
-					$.alert('No Valid Data Found');
+					if (!silent) {
+						$.alert('No Valid Data Found');
+					}
 					return updateUserInfoFromGGL();
 				}
 				updateUserInfoFromGGL();
 				loadData(data);
 			}).error(function() {
-				$.alert(EXPORT_ERROR + '\nPlease Re-login');
+				if (!silent) {
+					$.alert(EXPORT_ERROR + '\nPlease Re-login');
+				}
 				logoutFromGGL();
 			});
 
@@ -394,7 +405,9 @@ var exportFunc = execMain(function() {
 				});
 			}
 		}).error(function() {
-			$.alert(EXPORT_ERROR + '\nPlease Re-login');
+			if (!silent) {
+				$.alert(EXPORT_ERROR + '\nPlease Re-login');
+			}
 			logoutFromGGL();
 		});
 	}
@@ -721,6 +734,17 @@ var exportFunc = execMain(function() {
 			inOtherFile.change(importFile.bind(inOtherFile[0], readerOther));
 		}
 
+		// Auto-sync from Google Drive on page load if logged in
+		var gglToken = getDataId('gglData', 'access_token');
+		if (gglToken) {
+			// Auto-import from Google Drive after page loads (always enabled for Google)
+			// This ensures your solves are synced across all browsers/devices
+			// Silent mode: no alerts, no prompts, just sync in background
+			setTimeout(function() {
+				downloadDataGGL(true);
+			}, 1500);
+		}
+
 		if ($.urlParam('code')) { //WCA oauth
 			wcaDataTd.html(EXPORT_LOGINAUTHED);
 			$.post('oauthwca.php', {
@@ -758,6 +782,11 @@ var exportFunc = execMain(function() {
 						'ggl_me': val['user']
 					});
 					kernel.pushSignal('export', ['account', 'gglData']);
+					// Auto-import from Google Drive after successful login
+					// Silent mode: no alerts, just sync in background
+					setTimeout(function() {
+						downloadDataGGL(true);
+					}, 500);
 				} else {
 					$.alert(EXPORT_ERROR);
 					logoutFromGGL();
